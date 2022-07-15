@@ -6,9 +6,9 @@
 
 
 /**
- *
- *
- *
+ * _strrev - string reversal function
+ * @str: character
+ * Return: char str
  */
 
 char *_strrev(char *str)
@@ -18,9 +18,9 @@ char *_strrev(char *str)
 	char c;
 
 	if (!str)
-		return NULL;
+		return (NULL);
 
-	while (str[len] !='\0')
+	while (str[len] != '\0')
 	{
 		len++;
 	}
@@ -32,14 +32,16 @@ char *_strrev(char *str)
 		str[len - i - 1] = c;
 	}
 
-	return str;
+	return (str);
 }
 
 
 /**
- *
- *
- *
+ * _itoa - converts to string
+ * @i: integer
+ * @strout: string output
+ * @base: base 10
+ * Return: strout.
  */
 
 
@@ -70,13 +72,13 @@ char *_itoa(int i, char *strout, int base)
 	*str = '\0';
 	_strrev(strout);
 
-	return strout;
+	return (strout);
 }
 
 /**
- *
- *
- *
+ * _printf - main function that produces output
+ * @format: format character string
+ * Return: the number of characters printed
  */
 
 int _printf(const char *format, ...)
@@ -87,7 +89,8 @@ int _printf(const char *format, ...)
 	va_list ap;
 	char *str_arg;
 
-	if (format == NULL) exit(98);
+	if (format == NULL)
+		exit(98);
 
 	va_start(ap, format);
 
@@ -114,16 +117,27 @@ int _printf(const char *format, ...)
 					j += strlen(tmp);
 					break;
 				}
+				/* convert percentage */
 				case '%':
 				{
-					s[j] = '\\' + format[i];
+					s[j] = format[i];
+					j++;
 					break;
 				}
+				/* convert string */
 				case 's':
 				{
 					str_arg = va_arg(ap, char*);
 					strcpy(&s[j], str_arg);
 					j += strlen(str_arg);
+					break;
+				}
+				/* convert integer */
+				case 'i':
+				{
+					_itoa(va_arg(ap, int), tmp, 10);
+					strcpy(&s[j], tmp);
+					j += strlen(tmp);
 					break;
 				}
 			}
@@ -139,5 +153,5 @@ int _printf(const char *format, ...)
 	write(1, s, j);
 	va_end(ap);
 
-	return j;
+	return (j);
 }
