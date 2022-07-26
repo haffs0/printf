@@ -85,11 +85,13 @@ int _printf(const char *format, ...)
 {
 	int i = 0, j = 0;
 	char tmp[20];
-	char s[1000] = {0};
-	va_list ap;
-	char *str_arg;
+	char *s;
 
-	if (format == NULL)
+	s = malloc(sizeof(char) * ((int) strlen(format) + 1));
+
+	va_list ap;
+
+	if (format == NULL || s == NULL)
 		exit(98);
 
 	va_start(ap, format);
@@ -105,7 +107,7 @@ int _printf(const char *format, ...)
 				/* convert char */
 				case 'c':
 				{
-					s[j] = (char) va_arg(ap, int);
+					*(s + j) = (char) va_arg(ap, int);
 					j++;
 					break;
 				}
@@ -113,30 +115,31 @@ int _printf(const char *format, ...)
 				case 'd':
 				{
 					_itoa(va_arg(ap, int), tmp, 10);
-					strcpy(&s[j], tmp);
+					strcpy((s + j), tmp);
 					j += strlen(tmp);
 					break;
 				}
 				/* convert percentage */
 				case '%':
 				{
-					s[j] = format[i];
+					*(s + j) = format[i];
 					j++;
 					break;
 				}
 				/* convert string */
 				case 's':
 				{
-					str_arg = va_arg(ap, char*);
-					strcpy(&s[j], str_arg);
-					j += strlen(str_arg);
+					char *str = va_arg(ap, char*);
+					str = str ? str : "(null)";
+					strcpy((s + j), str);
+					j += strlen(str);
 					break;
 				}
 				/* convert integer */
 				case 'i':
 				{
 					_itoa(va_arg(ap, int), tmp, 10);
-					strcpy(&s[j], tmp);
+					strcpy((s + j), tmp);
 					j += strlen(tmp);
 					break;
 				}
@@ -144,7 +147,7 @@ int _printf(const char *format, ...)
 		}
 		else
 		{
-			s[j] = format[i];
+			*(s + j) = format[i];
 			j++;
 		}
 		i++;
