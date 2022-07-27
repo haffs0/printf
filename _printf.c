@@ -86,10 +86,9 @@ int _printf(const char *format, ...)
 	int i = 0, j = 0;
 	char tmp[20];
 	char *s;
+	va_list ap;
 
 	s = malloc(sizeof(char) * ((int) strlen(format) + 1));
-
-	va_list ap;
 
 	if (format == NULL || s == NULL)
 		exit(98);
@@ -130,6 +129,7 @@ int _printf(const char *format, ...)
 				case 's':
 				{
 					char *str = va_arg(ap, char*);
+
 					str = str ? str : "(null)";
 					strcpy((s + j), str);
 					j += strlen(str);
