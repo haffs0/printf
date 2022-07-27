@@ -90,7 +90,7 @@ int _printf(const char *format, ...)
 
 	s = malloc(sizeof(char) * ((int) strlen(format) + 1));
 
-	if (format == NULL || s == NULL)
+	if (s == NULL)
 		exit(98);
 
 	va_start(ap, format);
@@ -155,6 +155,7 @@ int _printf(const char *format, ...)
 
 	write(1, s, j);
 	va_end(ap);
+	free(s);
 
 	return (j);
 }
