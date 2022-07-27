@@ -143,6 +143,40 @@ int _printf(const char *format, ...)
 					j += strlen(tmp);
 					break;
 				}
+				case 'x':
+				{
+					_itoa(va_arg(ap, int), tmp, 16);
+					strcpy((s + j), tmp);
+					j += strlen(tmp);
+					break;
+				}
+				case 'o':
+                                {
+                                        _itoa(va_arg(ap, int), tmp, 8);
+                                        strcpy((s + j), tmp);
+                                        j += strlen(tmp);
+                                        break;
+                                }
+				case 'u':
+                                {
+                                        _itoa(va_arg(ap, int), tmp, 10);
+                                        strcpy((s + j), tmp);
+                                        j += strlen(tmp);
+                                        break;
+                                }
+				case 'X':
+                                {
+                                        _itoa(va_arg(ap, int), tmp, 16);
+                                        strcpy((s + j), tmp);
+                                        j += strlen(tmp);
+                                        break;
+                                }
+				case 'p':
+                                {
+                                        *(s + j) = format[i];
+                                        j++;
+                                        break;
+                                }
 			}
 		}
 		else
